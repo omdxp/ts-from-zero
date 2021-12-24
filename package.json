@@ -1,0 +1,27 @@
+{
+  "name": "ts-from-zero",
+  "version": "1.0.0",
+  "description": "TypeScript from zero to advanced!",
+  "main": "dist/app.js",
+  "scripts": {
+    "start": "tsc && node .",
+    "build": "tsc -p tsconfig.json"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Omar-Belghaouti/ts-from-zero.git"
+  },
+  "keywords": [
+    "TypeScript",
+    "TS"
+  ],
+  "author": "Omar Belghaouti",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Omar-Belghaouti/ts-from-zero/issues"
+  },
+  "homepage": "https://github.com/Omar-Belghaouti/ts-from-zero#readme",
+  "devDependencies": {
+    "typescript": "^4.5.4"
+  }
+}
