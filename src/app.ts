@@ -1,1 +1,6 @@
-const m: Map<any, any> = new Map();
+const button = document.querySelector("button")!;
+
+// a comment
+button.addEventListener("click", () => {
+  console.log("clicked");
+});
