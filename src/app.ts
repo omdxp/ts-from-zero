@@ -1,2 +1,7 @@
-console.log("Hello World");
-let x: number = 10;
+const button = document.querySelector("button")!;
+
+button.addEventListener("click", () => {
+  console.log("Clicked!");
+});
+
+const m: Map<any, any> = new Map();
