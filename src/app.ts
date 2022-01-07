@@ -1,7 +1,22 @@
-import _ from "lodash";
+import "reflect-metadata";
 
-declare var GLOBAL: string;
+import { Product } from "./product.model";
+import { plainToInstance } from "class-transformer";
 
-console.log(_.shuffle([1, 2, 3]));
+const products = [
+  { title: "A Book", price: 10 },
+  { title: "A Car", price: 100 },
+  { title: "A House", price: 1000 },
+];
 
-console.log(GLOBAL);
+// const p1 = new Product("Book", 12.99);
+
+// const loadedProducts = products.map((prod) => {
+//   return new Product(prod.title, prod.price);
+// });
+
+const loadedProducts = plainToInstance(Product, products);
+
+for (const prod of loadedProducts) {
+  console.log(prod.getInfo());
+}
