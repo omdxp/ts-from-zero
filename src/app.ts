@@ -1,44 +1,44 @@
-function Logger(logString: string) {
-  console.log("LOGGER FACTORY");
-  return function (constructor: Function) {
-    console.log(logString);
-    console.log(constructor);
-  };
-}
+// function Logger(logString: string) {
+//   console.log("LOGGER FACTORY");
+//   return function (constructor: Function) {
+//     console.log(logString);
+//     console.log(constructor);
+//   };
+// }
 
-// this will execute when instance of class is created
-function WithTemplate(template: string, hookId: string) {
-  console.log("TEMPLATE FACTORY");
-  return function <T extends { new (...args: any[]): { name: string } }>(
-    originalConstructor: T
-  ) {
-    return class extends originalConstructor {
-      constructor(..._: any[]) {
-        super();
-        console.log("Rendering template");
-        const hookEl = document.getElementById(hookId);
-        if (hookEl) {
-          hookEl.innerHTML = template;
-          hookEl.querySelector("h1")!.textContent = this.name;
-        }
-      }
-    };
-  };
-}
+// // this will execute when instance of class is created
+// function WithTemplate(template: string, hookId: string) {
+//   console.log("TEMPLATE FACTORY");
+//   return function <T extends { new (...args: any[]): { name: string } }>(
+//     originalConstructor: T
+//   ) {
+//     return class extends originalConstructor {
+//       constructor(..._: any[]) {
+//         super();
+//         console.log("Rendering template");
+//         const hookEl = document.getElementById(hookId);
+//         if (hookEl) {
+//           hookEl.innerHTML = template;
+//           hookEl.querySelector("h1")!.textContent = this.name;
+//         }
+//       }
+//     };
+//   };
+// }
 
-@Logger("LOGGING - PERSON")
-@WithTemplate("<h1>My Person Object</h1>", "app")
-class Person {
-  name = "Omar";
+// @Logger("LOGGING - PERSON")
+// @WithTemplate("<h1>My Person Object</h1>", "app")
+// class Person {
+//   name = "Omar";
 
-  constructor() {
-    console.log("Creating person object...");
-  }
-}
+//   constructor() {
+//     console.log("Creating person object...");
+//   }
+// }
 
-const pers = new Person();
+// const pers = new Person();
 
-console.log(pers);
+// console.log(pers);
 
 // ---
 
@@ -58,11 +58,12 @@ function Log3(
   target: any,
   name: string | Symbol,
   descriptor: PropertyDescriptor
-) {
+): PropertyDescriptor {
   console.log("Method decorator!");
   console.log(target);
   console.log(name);
   console.log(descriptor);
+  return {};
 }
 
 function Log4(target: any, name: string | Symbol, position: number) {
@@ -96,3 +97,33 @@ class Product {
     return this._price * (1 + tax);
   }
 }
+
+const p1 = new Product("Book", 19);
+const p2 = new Product("Book 2", 29);
+
+function Autobind(_: any, _2: string, descriptor: PropertyDescriptor) {
+  const originalMethod = descriptor.value;
+  const adjDescriptor: PropertyDescriptor = {
+    configurable: true,
+    enumerable: false,
+    get() {
+      const boundFn = originalMethod.bind(this);
+      return boundFn;
+    },
+  };
+  return adjDescriptor;
+}
+
+class Printer {
+  message = "This works!";
+
+  @Autobind
+  showMessage() {
+    console.log(this.message);
+  }
+}
+
+const p = new Printer();
+
+const button = document.querySelector("button")!;
+button.addEventListener("click", p.showMessage);
